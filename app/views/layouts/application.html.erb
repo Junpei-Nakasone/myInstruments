@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyInstruments</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" %>
+  </head>
+
+  <body>
+
+    <% if flash[:notice] %>
+      <div class="notification is-info">
+      <P class="notice"><%= notice %></p>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="notification is-danger">
+        <p class="alert"><%= alert %></p>
+      </div>
+    <% end %>
+
+    <nav class="navbar is-warning">
+
+      <div class="navbar-brand">
+        <%= link_to root_path, class:"navbar-item" do %>
+          <h1 class="title is-4" style="font-family: cursive;">MyInstruments</h1>
+        <% end %>
+        <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <% if user_signed_in? %>
+        <div id="navbarExampleTransparentExample" class="navbar-menu">
+
+
+          <div class="navbar-item">
+          <%= link_to "楽器一覧", instruments_path, class: "navbar-item button is-warning is-light" %>
+            <%= link_to "楽器登録", new_instrument_path, class: "navbar-item button is-warning is-light" %>
+          </div>
+
+          <p><%= current_user.username %>さん、こんにちは</p>
+
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="field is-grouped">
+
+                <p class="control">
+                  <%= link_to  "All User", users_path, class: "button is-warning is-light" %>
+                </p>
+
+                <p class="control">
+                  <%= link_to  "Log Out", destroy_user_session_path, method: :delete, class: "button is-warning is-light" %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <% else %>
+          <div id="navbarExampleTransparentExample" class="navbar-menu">
+            <div class="navbar-item">
+          <%= link_to "楽器一覧", instruments_path, class: "navbar-item button is-warning is-light" %>
+            </div>
+
+
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="field is-grouped">
+                  <p class="control">
+                    <%= link_to  "All User", users_path, class: "button is-warning is-light" %>
+                  </p>
+                  <p class="control">
+                    <%= link_to  "Login", new_user_session_path, class: "button is-warning is-light" %>
+                  </p>
+                  <p class="control">
+                    <%= link_to  "新規登録", new_user_registration_path, class: "button is-warning is-light" %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+      <% end %>
+
+    </nav>
+
+    <%= yield %>
+  </body>
+</html>
